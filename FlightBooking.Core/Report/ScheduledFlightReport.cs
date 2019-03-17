@@ -35,7 +35,7 @@ namespace FlightBooking.Core.Report
 
       str.Append(fmt.VerticalSpace);
 
-      if(summary.CanProceed)
+      if(summary.CanFly)
         str.Append($"THIS FLIGHT MAY PROCEED");
       else
         str.Append($"FLIGHT MAY NOT PROCEED");

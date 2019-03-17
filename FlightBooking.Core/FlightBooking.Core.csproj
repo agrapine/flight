@@ -12,5 +12,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Report\" />
+    <Folder Include="FlyConditions\" />
+    <Folder Include="Passengers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="PassengerRule.cs" />
   </ItemGroup>
 </Project>

@@ -1,53 +1,30 @@
 ﻿using System;
 using System.Linq;
-using FlightBooking.Core.Report;
+using FlightBooking.Core.FlyConditions;
+using FlightBooking.Core.Passengers;
 
 namespace FlightBooking.Core
 {
-
   public class FlightEvaluator
   {
-    public PassengerRule[] Rules { get; }
+    public IPassengerRule[] PassengerRules { get; }
+    public IFlyCondition[] FlyConditions { get; }
 
     public FlightEvaluator()
     {
-      Rules = new PassengerRule[]{
-        new PassengerRule
-        {
-          Type = PassengerType.General,
-          SeatsTaken = 1,
-          ExpectedBaggage = 1,
-          Profit = (p, r) => r.BasePrice,
-          PointsAccrued = (p, r) => 0,
-          PointsRedeemed = (p, r) => 0,
-        },
-        new PassengerRule
-        {
-          Type = PassengerType.LoyaltyMember,
-          SeatsTaken = 1,
-          ExpectedBaggage = 2,
-          Profit = (p,r) => p.IsUsingLoyaltyPoints ? 0 : r.BasePrice,
-          PointsAccrued = (p,r) => p.IsUsingLoyaltyPoints ? 0 : r.LoyaltyPointsGained,
-          PointsRedeemed = (p,r) => p.IsUsingLoyaltyPoints ? r.PointsBasePrice() : 0,
-        },
-        new PassengerRule
-        {
-          Type =PassengerType.AirlineEmployee,
-          SeatsTaken = 1,
-          ExpectedBaggage = 1,
-          Profit = (p,r) => 0,
-          PointsAccrued = (p,r) => 0,
-          PointsRedeemed = (p,r) => 0,
-        },
-        new PassengerRule
-        {
-          Type = PassengerType.Discounted,
-          SeatsTaken = 1,
-          ExpectedBaggage = 0,
-          Profit = (p,r) => r.BasePrice * 0.5,
-          PointsAccrued = (p,r) => 0,
-          PointsRedeemed = (p,r) => 0,
-        }};
+      FlyConditions = new IFlyCondition[]
+      {
+        new AirlineFlyCondition(),
+        new StrictlyProfitableFlyCondition()
+      };
+
+      PassengerRules = new IPassengerRule[]
+      {
+        new AirlinePassenger(),
+        new LoyaltyPassenger(),
+        new GeneralPassenger(),
+        new DiscountedPassenger(),
+      };
     }
 
     public ScheduledFlightSummary Evaluate(ScheduledFlight flight)
@@ -59,7 +36,7 @@ namespace FlightBooking.Core
         MinimumTakeOffPercentage = flight.FlightRoute.MinimumTakeOffPercentage,
       };
       var passengerRule = flight.Passengers
-        .Join(Rules,
+        .Join(PassengerRules,
           x => x.Type,
           x => x.Type,
           (passenger, rule) => new { rule, passenger })
@@ -90,11 +67,8 @@ namespace FlightBooking.Core
             return s;
           });
 
-      summary.ProfitSurplus = summary.ProfitFromFlight - summary.CostOfFlight;
-      summary.CanProceed = summary.ProfitSurplus > 0
-      && summary.SeatsTaken < summary.AvailableSeats
-      && summary.SeatsTaken / (double)summary.AvailableSeats > summary.MinimumTakeOffPercentage;
-
+      summary.CanFly = FlyConditions.Any(x => x.CanFly(summary));
+             
       return summary;
     }
   }
