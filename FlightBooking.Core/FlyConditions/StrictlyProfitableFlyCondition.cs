@@ -8,7 +8,7 @@
     public bool CanFly(FlightSummary summary, Plane plane)
     {
       return summary.ProfitSurplus > 0
-      && summary.SeatsTaken < plane.NumberOfSeats
+      && summary.SeatsTaken <= plane.NumberOfSeats
       && summary.SeatsTaken / (double)plane.NumberOfSeats > summary.MinimumTakeOffPercentage;
     }
   }
