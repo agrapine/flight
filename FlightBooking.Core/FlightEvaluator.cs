@@ -27,12 +27,16 @@ namespace FlightBooking.Core
       };
     }
 
-    public ScheduledFlightSummary Evaluate(ScheduledFlight flight)
+    public FlightSummary Evaluate(ScheduledFlight flight)
     {
-      var summary = new ScheduledFlightSummary
+      if(!flight.Aircrafts.Any())
+      {
+        throw new Exception("No aircraft available");
+      }
+
+      var summary = new FlightSummary
       {
         Title = flight.FlightRoute.Title,
-        AvailableSeats = flight.Aircraft.NumberOfSeats,
         MinimumTakeOffPercentage = flight.FlightRoute.MinimumTakeOffPercentage,
       };
       var passengerRule = flight.Passengers
@@ -47,7 +51,9 @@ namespace FlightBooking.Core
         throw new ArgumentOutOfRangeException();
       }
 
-      summary = passengerRule.Aggregate(summary,
+      summary = passengerRule
+
+        .Aggregate(summary,
           (s, x) =>
           {
             s.SeatsTaken += x.rule.SeatsTaken;
@@ -67,8 +73,18 @@ namespace FlightBooking.Core
             return s;
           });
 
-      summary.CanFly = FlyConditions.Any(x => x.CanFly(summary));
-             
+
+
+      summary.CanFly = FlyConditions.Any(x => x.CanFly(summary, flight.Aircrafts[0]));
+      if (!summary.CanFly)
+      {
+        summary.AlternativeAircrafts = flight.Aircrafts
+          .Skip(1) // skip the designated aircraft
+          .Where(plane => FlyConditions.Any(x => x.CanFly(summary, plane)))
+          .Select(x => x.Name)
+          .ToArray();
+      }
+
       return summary;
     }
   }

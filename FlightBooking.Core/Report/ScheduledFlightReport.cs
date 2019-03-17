@@ -5,7 +5,7 @@ namespace FlightBooking.Core.Report
 {
   public static class ScheduledFlightReport
   {
-    public static string BuildReport(this ScheduledFlightSummary summary, FormatOptions formatOptions = default)
+    public static string BuildReport(this FlightSummary summary, FormatOptions formatOptions = default)
     {
       var fmt = formatOptions ?? FormatOptions.Default;
 
@@ -35,11 +35,21 @@ namespace FlightBooking.Core.Report
 
       str.Append(fmt.VerticalSpace);
 
-      if(summary.CanFly)
-        str.Append($"THIS FLIGHT MAY PROCEED");
+      if (summary.CanFly)
+        str.Append($"THIS FLIGHT MAY PROCEED{fmt.NewLine}");
       else
-        str.Append($"FLIGHT MAY NOT PROCEED");
-        
+      {
+        str.Append($"FLIGHT MAY NOT PROCEED{fmt.NewLine}");
+
+        if (summary.AlternativeAircrafts?.Length > 0)
+        {
+          str.Append($"Other more suitable aircrafts are:{fmt.NewLine}");
+          foreach (var alternative in summary.AlternativeAircrafts)
+          {
+            str.Append($"{alternative} could handle this flight.{fmt.NewLine}");
+          }
+        }
+      }
 
       return str.ToString();
     }

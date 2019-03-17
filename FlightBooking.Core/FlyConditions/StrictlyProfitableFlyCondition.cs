@@ -5,11 +5,11 @@
   /// </summary>
   public class StrictlyProfitableFlyCondition : IFlyCondition
   {
-    public bool CanFly(ScheduledFlightSummary summary)
+    public bool CanFly(FlightSummary summary, Plane plane)
     {
       return summary.ProfitSurplus > 0
-      && summary.SeatsTaken < summary.AvailableSeats
-      && summary.SeatsTaken / (double)summary.AvailableSeats > summary.MinimumTakeOffPercentage;
+      && summary.SeatsTaken < plane.NumberOfSeats
+      && summary.SeatsTaken / (double)plane.NumberOfSeats > summary.MinimumTakeOffPercentage;
     }
   }
 }

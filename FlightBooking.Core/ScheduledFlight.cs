@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FlightBooking.Core.Report;
 
 namespace FlightBooking.Core
@@ -9,10 +10,11 @@ namespace FlightBooking.Core
     {
       FlightRoute = flightRoute;
       Passengers = new List<Passenger>();
+      Aircrafts = new List<Plane>();
     }
 
     public FlightRoute FlightRoute { get; }
-    public Plane Aircraft { get; private set; }
+    public List<Plane> Aircrafts { get; }
     public List<Passenger> Passengers { get; }
 
     public void AddPassenger(Passenger passenger)
@@ -22,7 +24,12 @@ namespace FlightBooking.Core
 
     public void SetAircraftForRoute(Plane aircraft)
     {
-      Aircraft = aircraft;
+      Aircrafts.Insert(0, aircraft);
+    }
+
+    public void AddAircraft(Plane aircraft)
+    {
+      Aircrafts.Add(aircraft);
     }
 
     public string GetSummary()
@@ -31,5 +38,7 @@ namespace FlightBooking.Core
       var summary = eval.Evaluate(this);
       return summary.BuildReport();
     }
+
+
   }
 }

@@ -3,7 +3,7 @@ using System.Text;
 
 namespace FlightBooking.Core
 {
-  public class ScheduledFlightSummary
+  public class FlightSummary
   {
     public string Title { get; set; }
     public double CostOfFlight { get; set; }
@@ -22,10 +22,9 @@ namespace FlightBooking.Core
 
     public double ProfitSurplus => ProfitFromFlight - CostOfFlight;
 
-    public int AvailableSeats { get; set; }
-
     public double MinimumTakeOffPercentage { get; set; }
 
     public bool CanFly { get; set; }
+    public string[] AlternativeAircrafts { get; set; }
   }
 }

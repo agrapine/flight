@@ -7,9 +7,9 @@
   /// </summary>
   public class AirlineFlyCondition : IFlyCondition
   {
-    public bool CanFly(ScheduledFlightSummary summary)
+    public bool CanFly(FlightSummary summary, Plane plane)
     {
-      return summary.AirlinePassengers / (double)summary.AvailableSeats > summary.MinimumTakeOffPercentage;
+      return summary.AirlinePassengers / (double)plane.NumberOfSeats > summary.MinimumTakeOffPercentage;
     }
   }
 }

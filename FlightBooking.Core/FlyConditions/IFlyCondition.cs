@@ -5,6 +5,6 @@
   /// </summary>
   public interface IFlyCondition
   {
-    bool CanFly(ScheduledFlightSummary summary);
+    bool CanFly(FlightSummary summary, Plane plane);
   }
 }

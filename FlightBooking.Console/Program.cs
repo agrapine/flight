@@ -115,7 +115,8 @@ namespace FlightBooking.Console
       };
 
       _scheduledFlight = new ScheduledFlight(londonToParis);
-      _scheduledFlight.SetAircraftForRoute(new Plane { Id = 123, Name = "Antonov AN-2", NumberOfSeats = 12 });
+      _scheduledFlight.SetAircraftForRoute(new Plane { Id = 123, Name = "Antonov AN-2", NumberOfSeats = 4 });
+      _scheduledFlight.AddAircraft(new Plane { Id = 124, Name = "Q400", NumberOfSeats = 12 });
     }
   }
 }
