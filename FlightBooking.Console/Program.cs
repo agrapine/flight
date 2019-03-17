@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using FlightBooking.Core;
+using FlightBooking.Core.Passengers;
 
 namespace FlightBooking.Console
 {

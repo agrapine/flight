@@ -1,4 +1,4 @@
-﻿namespace FlightBooking.Core
+﻿namespace FlightBooking.Core.Passengers
 {
   public enum PassengerType
   {

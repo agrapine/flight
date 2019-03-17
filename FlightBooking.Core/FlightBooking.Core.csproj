@@ -17,5 +17,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="PassengerRule.cs" />
+    <Compile Remove="FlightEvaluator.cs" />
+    <Compile Remove="FlightEvaluator.cs" />
   </ItemGroup>
 </Project>
