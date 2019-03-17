@@ -15,9 +15,9 @@ namespace FlightBooking.Core.Report
     public int TotalExpectedBaggage { get; set; }
     public int SeatsTaken { get; set; }
 
-    public int GeneralPassengers { get; set; }
+    public int AirlinePassengers { get; set; }
     public int LoyaltyPassengers { get; set; }
-    public int EmployeePassengers { get; set; }
+    public int GeneralPassengers { get; set; }
 
     public double ProfitSurplus { get; set; }
 

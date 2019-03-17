@@ -73,6 +73,11 @@ namespace FlightBooking.Core
             s.TotalLoyaltyPointsAcrrued += x.rule.PointsAccrued(x.passenger, flight.FlightRoute);
             s.TotalLoyaltyPointsRedeemed += x.rule.PointsRedeemed(x.passenger, flight.FlightRoute);
 
+            s.GeneralPassengers += x.passenger.Type == PassengerType.General ? 1 : 0;
+            s.LoyaltyPassengers += x.passenger.Type == PassengerType.LoyaltyMember ? 1 : 0;
+            s.AirlinePassengers += x.passenger.Type == PassengerType.AirlineEmployee ? 1 : 0;
+
+
             return s;
           });
 
