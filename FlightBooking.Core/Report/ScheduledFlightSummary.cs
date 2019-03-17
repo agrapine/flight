@@ -18,6 +18,7 @@ namespace FlightBooking.Core.Report
     public int AirlinePassengers { get; set; }
     public int LoyaltyPassengers { get; set; }
     public int GeneralPassengers { get; set; }
+    public int DiscountedPassengers { get; set; }
 
     public double ProfitSurplus { get; set; }
 

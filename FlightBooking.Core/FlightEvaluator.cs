@@ -17,18 +17,18 @@ namespace FlightBooking.Core
           Type = PassengerType.General,
           SeatsTaken = 1,
           ExpectedBaggage = 1,
-          Profit = (p, r) => r.BaseCost,
+          Profit = (p, r) => r.BasePrice,
           PointsAccrued = (p, r) => 0,
           PointsRedeemed = (p, r) => 0,
         },
-       new PassengerRule
+        new PassengerRule
         {
           Type = PassengerType.LoyaltyMember,
           SeatsTaken = 1,
           ExpectedBaggage = 2,
-          Profit = (p,r) => p.IsUsingLoyaltyPoints ? 0 : r.BaseCost,
+          Profit = (p,r) => p.IsUsingLoyaltyPoints ? 0 : r.BasePrice,
           PointsAccrued = (p,r) => p.IsUsingLoyaltyPoints ? 0 : r.LoyaltyPointsGained,
-          PointsRedeemed = (p,r) => p.IsUsingLoyaltyPoints ? r.PointBaseCost() : 0,
+          PointsRedeemed = (p,r) => p.IsUsingLoyaltyPoints ? r.PointsBasePrice() : 0,
         },
         new PassengerRule
         {
@@ -36,6 +36,15 @@ namespace FlightBooking.Core
           SeatsTaken = 1,
           ExpectedBaggage = 1,
           Profit = (p,r) => 0,
+          PointsAccrued = (p,r) => 0,
+          PointsRedeemed = (p,r) => 0,
+        },
+        new PassengerRule
+        {
+          Type = PassengerType.Discounted,
+          SeatsTaken = 1,
+          ExpectedBaggage = 0,
+          Profit = (p,r) => r.BasePrice * 0.5,
           PointsAccrued = (p,r) => 0,
           PointsRedeemed = (p,r) => 0,
         }};
@@ -56,7 +65,7 @@ namespace FlightBooking.Core
           (passenger, rule) => new { rule, passenger })
           .ToList();
 
-      if(passengerRule.Count != flight.Passengers.Count)
+      if (passengerRule.Count != flight.Passengers.Count)
       {
         throw new ArgumentOutOfRangeException();
       }
@@ -76,7 +85,7 @@ namespace FlightBooking.Core
             s.GeneralPassengers += x.passenger.Type == PassengerType.General ? 1 : 0;
             s.LoyaltyPassengers += x.passenger.Type == PassengerType.LoyaltyMember ? 1 : 0;
             s.AirlinePassengers += x.passenger.Type == PassengerType.AirlineEmployee ? 1 : 0;
-
+            s.DiscountedPassengers += x.passenger.Type == PassengerType.Discounted ? 1 : 0;
 
             return s;
           });

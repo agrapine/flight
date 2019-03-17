@@ -15,6 +15,7 @@ namespace FlightBooking.Core.Report
       str.Append(fmt.VerticalSpace);
       str.Append($"Total passengers: {summary.SeatsTaken}{fmt.NewLine}");
       str.Append($"{fmt.Ident}General sales: {summary.GeneralPassengers}{fmt.NewLine}");
+      str.Append($"{fmt.Ident}Discounted sales: {summary.DiscountedPassengers}{fmt.NewLine}");
       str.Append($"{fmt.Ident}Loyalty member sales: {summary.LoyaltyPassengers}{fmt.NewLine}");
       str.Append($"{fmt.Ident}Airline employee sales: {summary.AirlinePassengers}{fmt.VerticalSpace}");
 

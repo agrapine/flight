@@ -20,13 +20,13 @@ namespace FlightBooking.Console
       "add airline Trevor 47",
       "add general Alan 34",
       "add general Suzy 21",
+      "add discounted Zack 62",
       "print summary"
     };
 
     private static void Main(string[] args)
     {
       SetupAirlineData();
-
 
       var stage = SampleTest.ToList();
 
@@ -79,6 +79,16 @@ namespace FlightBooking.Console
             Type = PassengerType.AirlineEmployee,
             Name = passengerSegments[2],
             Age = Convert.ToInt32(passengerSegments[3]),
+          });
+        }
+        else if(enteredText.Contains("add discounted"))
+        {
+          var passengerSegments = enteredText.Split(' ');
+          _scheduledFlight.AddPassenger(new Passenger
+          {
+            Type = PassengerType.Discounted,
+            Name = passengerSegments[2],
+            Age = Convert.ToInt32(passengerSegments[3])
           });
         }
         else if (enteredText.Contains("exit"))
