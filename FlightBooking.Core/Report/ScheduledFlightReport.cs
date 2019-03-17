@@ -26,7 +26,7 @@ namespace FlightBooking.Core.Report
       if (summary.ProfitSurplus > 0)
         str.Append($"Flight generating profit of: {summary.ProfitSurplus}");
       else
-        str.Append($"Flight losing money of:: {summary.ProfitSurplus}");
+        str.Append($"Flight losing money of: {summary.ProfitSurplus}");
       str.Append(fmt.VerticalSpace);
 
       str.Append($"Total loyalty points given away: {summary.TotalLoyaltyPointsAcrrued}{fmt.NewLine}");

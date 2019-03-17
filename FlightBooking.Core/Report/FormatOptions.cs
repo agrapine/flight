@@ -5,13 +5,13 @@ namespace FlightBooking.Core.Report
   {
     public static FormatOptions Default = new FormatOptions
     {
-      VerticalWhiteSpace = Environment.NewLine + Environment.NewLine,
+      VerticalSpace = Environment.NewLine + Environment.NewLine,
       NewLine = Environment.NewLine,
-      Identation = "    "
+      Ident = "    "
     };
 
-    public string VerticalWhiteSpace { get; private set; }
+    public string VerticalSpace { get; private set; }
     public string NewLine { get; private set; }
-    public string Identation { get; private set; }
+    public string Ident { get; private set; }
   }
 }

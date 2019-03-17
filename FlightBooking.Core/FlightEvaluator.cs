@@ -28,7 +28,7 @@ namespace FlightBooking.Core
           ExpectedBaggage = 2,
           Profit = (p,r) => p.IsUsingLoyaltyPoints ? 0 : r.BaseCost,
           PointsAccrued = (p,r) => p.IsUsingLoyaltyPoints ? 0 : r.LoyaltyPointsGained,
-          PointsRedeemed = (p,r) => p.IsUsingLoyaltyPoints ? r.PointBaseCost : 0,
+          PointsRedeemed = (p,r) => p.IsUsingLoyaltyPoints ? r.PointBaseCost() : 0,
         },
         new PassengerRule
         {

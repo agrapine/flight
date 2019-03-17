@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace FlightBooking.Core
+﻿namespace FlightBooking.Core
 {
   public class FlightRoute
   {
@@ -18,7 +16,5 @@ namespace FlightBooking.Core
     public double BaseCost { get; set; }
     public int LoyaltyPointsGained { get; set; }
     public double MinimumTakeOffPercentage { get; set; }
-
-    public int PointBaseCost => Convert.ToInt32(Math.Ceiling(BasePrice));
   }
 }

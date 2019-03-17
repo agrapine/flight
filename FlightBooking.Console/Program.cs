@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using FlightBooking.Core;
 
 namespace FlightBooking.Console
@@ -7,15 +8,41 @@ namespace FlightBooking.Console
   {
     private static ScheduledFlight _scheduledFlight;
 
+    private static string[] SampleTest = new string[]
+    {
+      "add general Steve 30",
+      "add general Mark 12",
+      "add general James 36",
+      "add general Jane 32",
+      "add loyalty John 29 1000 true",
+      "add loyalty Sarah 45 1250 false",
+      "add loyalty Jack 60 50 false",
+      "add airline Trevor 47",
+      "add general Alan 34",
+      "add general Suzy 21",
+      "print summary"
+    };
+
     private static void Main(string[] args)
     {
       SetupAirlineData();
+
+
+      var stage = SampleTest.ToList();
 
       string command;
       do
       {
         System.Console.WriteLine("Please enter command.");
-        command = System.Console.ReadLine() ?? "";
+        if (stage.Any())
+        {
+          command = stage.First();
+          System.Console.WriteLine(command);
+          stage.RemoveAt(0);
+        }
+        else
+          command = System.Console.ReadLine() ?? "";
+
         var enteredText = command.ToLower();
         if (enteredText.Contains("print summary"))
         {
